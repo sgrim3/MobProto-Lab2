@@ -13,6 +13,7 @@
         android:id="@+id/my_edit_text"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
+        android:paddingTop="30dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
@@ -25,16 +26,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:text="@string/button_text"/>
-
-    <TextView
-        android:id="@+id/current_username"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@id/my_edit_text"
-        android:text="@string/username"/>
+        android:text="@string/button_text"
+        android:textSize="14dp"/>
 
     <Button
         android:id="@+id/change_username"
@@ -43,7 +36,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:text="@string/change_username"/>
+        android:text="@string/change_username"
+        android:textSize="14dp"/>
 
     <ListView
         android:id="@+id/my_list_view"
@@ -53,5 +47,17 @@
         android:layout_alignParentStart="true"
         android:layout_below="@id/change_username"
         android:layout_above="@id/my_edit_text"/>
+
+    <TextView
+        android:id="@+id/current_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="12dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@id/my_list_view"
+        android:text="@string/username"
+        android:textSize="18sp"/>
 
 </RelativeLayout>

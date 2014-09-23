@@ -13,24 +13,31 @@ import java.util.ArrayList;
  */
 public class ChatAdapter extends ArrayAdapter <ChatObject> {
     Context context;
+    int resource;
+    ArrayList<ChatObject> objects;
 
     public ChatAdapter(Context context, int resource, ArrayList<ChatObject> objects) {
         super(context, resource, objects);
         this.context = context;
+        this.resource = resource;
+        this.objects = objects;
     }
 
     private class ChatHolder {
+        Boolean thing;
         TextView name, body, time;
     }
 
     @Override
     public View getView(int position, View listItem, ViewGroup parent) {
         ChatHolder chatHolder;
+
         if (listItem == null) {
-            listItem = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.chat_item, parent);
+            listItem = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.chat_item, parent, false);
 
             chatHolder = new ChatHolder();
 
+            chatHolder.thing = true;
             chatHolder.name = (TextView) listItem.findViewById(R.id.username);
             chatHolder.body = (TextView) listItem.findViewById(R.id.message_body);
             chatHolder.time = (TextView) listItem.findViewById(R.id.timestamp);
@@ -42,9 +49,9 @@ public class ChatAdapter extends ArrayAdapter <ChatObject> {
             chatHolder = (ChatHolder) listItem.getTag();
         }
 
-        chatHolder.body.setText ("hello");
-        chatHolder.name.setText ("username");
-        chatHolder.time.setText ("20000");
+        chatHolder.body.setText(objects.get(position).message);
+        chatHolder.name.setText(objects.get(position).username);
+        chatHolder.time.setText(objects.get(position).timestamp);
 
         return listItem;
     }

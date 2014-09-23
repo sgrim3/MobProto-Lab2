@@ -9,7 +9,5 @@
     <string name="change_username">Change Username</string>
     <string name="edit_message">Edit Message</string>
     <string name="username">Username</string>
-    <string name="message">Message</string>
-    <string name ="timestamp">Time</string>
 
 </resources>
