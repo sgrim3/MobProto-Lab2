@@ -30,6 +30,7 @@ public class ChatAdapter extends ArrayAdapter <ChatObject> {
         Boolean visible;
         TextView name, body, time;
         AlertDialog edit_text;
+        EditText input_text;
     }
 
     @Override
@@ -41,20 +42,19 @@ public class ChatAdapter extends ArrayAdapter <ChatObject> {
 
             chatHolder = new ChatHolder();
 
-
             chatHolder.visible = true;
             chatHolder.name = (TextView) listItem.findViewById(R.id.username);
             chatHolder.body = (TextView) listItem.findViewById(R.id.message_body);
             chatHolder.time = (TextView) listItem.findViewById(R.id.timestamp);
 
-            final EditText inputText = new EditText(context);
+            chatHolder.input_text = new EditText(context);
             chatHolder.edit_text = new AlertDialog.Builder(context).setTitle("Edit Message")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            chatHolder.body.setText(String.valueOf(inputText.getText()));
+                            chatHolder.body.setText(String.valueOf(chatHolder.input_text.getText()));
                         }
-                    }).setView(inputText).create();
+                    }).setView(chatHolder.input_text).create();
 
             chatHolder.body.setOnClickListener(
                     new View.OnClickListener() {
@@ -74,6 +74,7 @@ public class ChatAdapter extends ArrayAdapter <ChatObject> {
         chatHolder.body.setText(objects.get(position).message);
         chatHolder.name.setText(objects.get(position).username);
         chatHolder.time.setText(objects.get(position).timestamp);
+        chatHolder.input_text.setText(objects.get(position).message);
 
         return listItem;
     }
