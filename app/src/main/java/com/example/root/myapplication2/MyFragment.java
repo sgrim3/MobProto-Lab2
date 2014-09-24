@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -46,7 +45,6 @@ public class MyFragment extends android.app.Fragment {
         final ArrayList<ChatObject> listChats = hdb.getAllChatObjects();
         final ChatAdapter adapter = new ChatAdapter(getActivity(), R.layout.chat_item, listChats);
 
-        //adapter.setNotifyOnChange(true);
         myListView.setAdapter(adapter);
         nameButton.setOnClickListener(
                 new View.OnClickListener() {

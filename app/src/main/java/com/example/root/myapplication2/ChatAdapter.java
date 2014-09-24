@@ -1,10 +1,13 @@
 package com.example.root.myapplication2;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 import java.util.ArrayList;
 
@@ -24,23 +27,42 @@ public class ChatAdapter extends ArrayAdapter <ChatObject> {
     }
 
     private class ChatHolder {
-        Boolean thing;
+        Boolean visible;
         TextView name, body, time;
+        AlertDialog edit_text;
     }
 
     @Override
     public View getView(int position, View listItem, ViewGroup parent) {
-        ChatHolder chatHolder;
+        final ChatHolder chatHolder;
 
         if (listItem == null) {
             listItem = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.chat_item, parent, false);
 
             chatHolder = new ChatHolder();
 
-            chatHolder.thing = true;
+
+            chatHolder.visible = true;
             chatHolder.name = (TextView) listItem.findViewById(R.id.username);
             chatHolder.body = (TextView) listItem.findViewById(R.id.message_body);
             chatHolder.time = (TextView) listItem.findViewById(R.id.timestamp);
+
+            final EditText inputText = new EditText(context);
+            chatHolder.edit_text = new AlertDialog.Builder(context).setTitle("Edit Message")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            chatHolder.body.setText(String.valueOf(inputText.getText()));
+                        }
+                    }).setView(inputText).create();
+
+            chatHolder.body.setOnClickListener(
+                    new View.OnClickListener() {
+                        public void onClick(View view) {
+                            chatHolder.edit_text.show();
+                        }
+                    }
+            );
 
             listItem.setTag(chatHolder);
         }
