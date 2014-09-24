@@ -46,7 +46,6 @@ public class ChatAdapter extends ArrayAdapter <ChatObject> {
             chatHolder.name = (TextView) listItem.findViewById(R.id.username);
             chatHolder.body = (TextView) listItem.findViewById(R.id.message_body);
             chatHolder.time = (TextView) listItem.findViewById(R.id.timestamp);
-
             chatHolder.input_text = new EditText(context);
             chatHolder.edit_text = new AlertDialog.Builder(context).setTitle("Edit Message")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
