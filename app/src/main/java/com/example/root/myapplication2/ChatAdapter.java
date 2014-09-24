@@ -59,6 +59,7 @@ public class ChatAdapter extends ArrayAdapter <ChatObject> {
             chatHolder.body.setOnClickListener(
                     new View.OnClickListener() {
                         public void onClick(View view) {
+                            chatHolder.input_text.setText(chatHolder.body.getText());
                             chatHolder.edit_text.show();
                         }
                     }
@@ -74,7 +75,6 @@ public class ChatAdapter extends ArrayAdapter <ChatObject> {
         chatHolder.body.setText(objects.get(position).message);
         chatHolder.name.setText(objects.get(position).username);
         chatHolder.time.setText(objects.get(position).timestamp);
-        chatHolder.input_text.setText(objects.get(position).message);
 
         return listItem;
     }
