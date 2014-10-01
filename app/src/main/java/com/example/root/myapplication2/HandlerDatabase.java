@@ -101,10 +101,8 @@ public class HandlerDatabase {
         while (!cursor.isAfterLast()) {
             //Get the ChatObjects
             ChatObject co = new ChatObject(
-                    cursor.getString(0),
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getString(3)
+                    cursor.getString(1), cursor.getString(0),
+                    cursor.getString(2)
                     );
             //Add the ChatObject
             chatObjects.add(co);

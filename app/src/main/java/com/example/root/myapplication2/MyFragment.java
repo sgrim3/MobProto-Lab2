@@ -3,6 +3,7 @@ package com.example.root.myapplication2;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,7 @@ public class MyFragment extends android.app.Fragment {
         final Button sendButton = (Button) rootView.findViewById(R.id.send_button);
         final Button nameButton = (Button) rootView.findViewById(R.id.change_username);
         final TextView username = (TextView) rootView.findViewById(R.id.current_username);
-        //final HandlerDatabase hdb = new HandlerDatabase(getActivity());
-        final Firebase firebase = new Firebase("https://boiling-inferno-4244.firebaseio.com/");
+        final Firebase firebase = new Firebase("https://mobileproto2014.firebaseio.com/chatroom/0");
 
 
         //Making Alert Dialog for Username
@@ -49,14 +49,15 @@ public class MyFragment extends android.app.Fragment {
                     }
                 }).setView(inputName).create();
 
-        //final ArrayList<ChatObject> listChats = hdb.getAllChatObjects();
         final ArrayList<ChatObject> listChats = new ArrayList<ChatObject>();
         final ChatAdapter adapter = new ChatAdapter(getActivity(), R.layout.chat_item, listChats);
         firebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    ChatObject chat = new ChatObject(child.get)
+                    listChats.add(child.getValue(ChatObject.class));
+                    adapter.notifyDataSetChanged();
+                    myListView.setSelection(adapter.getCount() - 1);
                 }
             }
 
@@ -65,32 +66,6 @@ public class MyFragment extends android.app.Fragment {
 
             }
         });
-//        firebase.child("username").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot snapshot) {
-//                listChats.add((ChatObject) snapshot.getValue());
-//                adapter.notifyDataSetChanged();
-//            }
-//            @Override public void onCancelled(FirebaseError error) { }
-//        });
-//
-//        firebase.child("message").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot snapshot) {
-//                listChats.add((ChatObject)snapshot.getValue());
-//                adapter.notifyDataSetChanged();
-//            }
-//            @Override public void onCancelled(FirebaseError error) { }
-//        });
-//
-//        firebase.child("timestamp").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot snapshot) {
-//                listChats.add((ChatObject)snapshot.getValue());
-//                adapter.notifyDataSetChanged();
-//            }
-//            @Override public void onCancelled(FirebaseError error) { }
-//        });
 
         myListView.setAdapter(adapter);
         nameButton.setOnClickListener(
@@ -104,17 +79,9 @@ public class MyFragment extends android.app.Fragment {
         sendButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View view) {
-                        Timestamp ts = new Timestamp(System.currentTimeMillis());
                         //ChatObject chat = new ChatObject("true",username.getText().toString(),myEditText.getText().toString(),ts.toString());
                         //firebase.child("message").push().setValue(username.getText().toString(),myEditText.getText().toString(),ts.toString());
-
-                        firebase.child("username").setValue(username.getText().toString());
-                        firebase.child("message").setValue(myEditText.getText().toString());
-                        firebase.child("timestamp").setValue(ts.toString());
-                        ChatObject chat = new ChatObject("true",username.getText().toString(),myEditText.getText().toString(),ts.toString());
-                        adapter.add(chat);
-                        adapter.notifyDataSetChanged();
-                        myListView.setSelection(adapter.getCount() - 1);
+                        firebase.push().setValue(new ChatObject(myEditText.getText().toString(), username.getText().toString(), String.valueOf(System.currentTimeMillis())));
                         myEditText.setText("");
                     }
                 });

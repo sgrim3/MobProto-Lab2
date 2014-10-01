@@ -55,7 +55,7 @@ public class ChatAdapter extends ArrayAdapter <ChatObject> {
         }
 
         chatHolder.body.setText(objects.get(position).message);
-        chatHolder.name.setText(objects.get(position).username);
+        chatHolder.name.setText(objects.get(position).name);
         chatHolder.time.setText(objects.get(position).timestamp);
 
         chatHolder.input_text = new EditText(context);
