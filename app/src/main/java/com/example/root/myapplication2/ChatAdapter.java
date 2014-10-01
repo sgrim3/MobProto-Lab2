@@ -46,23 +46,6 @@ public class ChatAdapter extends ArrayAdapter <ChatObject> {
             chatHolder.name = (TextView) listItem.findViewById(R.id.username);
             chatHolder.body = (TextView) listItem.findViewById(R.id.message_body);
             chatHolder.time = (TextView) listItem.findViewById(R.id.timestamp);
-            chatHolder.input_text = new EditText(context);
-            chatHolder.edit_text = new AlertDialog.Builder(context).setTitle("Edit Message")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            chatHolder.body.setText(String.valueOf(chatHolder.input_text.getText()));
-                        }
-                    }).setView(chatHolder.input_text).create();
-
-            chatHolder.body.setOnClickListener(
-                    new View.OnClickListener() {
-                        public void onClick(View view) {
-                            chatHolder.input_text.setText(chatHolder.body.getText());
-                            chatHolder.edit_text.show();
-                        }
-                    }
-            );
 
             listItem.setTag(chatHolder);
         }
@@ -75,6 +58,23 @@ public class ChatAdapter extends ArrayAdapter <ChatObject> {
         chatHolder.name.setText(objects.get(position).username);
         chatHolder.time.setText(objects.get(position).timestamp);
 
+        chatHolder.input_text = new EditText(context);
+        chatHolder.edit_text = new AlertDialog.Builder(context).setTitle("Edit Message")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        chatHolder.body.setText(String.valueOf(chatHolder.input_text.getText()));
+                    }
+                }).setView(chatHolder.input_text).create();
+
+        chatHolder.body.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View view) {
+                        chatHolder.input_text.setText(chatHolder.body.getText());
+                        chatHolder.edit_text.show();
+                    }
+                }
+        );
         return listItem;
     }
 }
